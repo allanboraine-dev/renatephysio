@@ -91,11 +91,11 @@ export function SymptomChecker() {
 
         <div className="p-4 bg-white border-t border-slate-100 rounded-b-xl">
           <form onSubmit={handleCustomSubmit} className="flex gap-2">
-            <Input
+            <input
               value={localInput}
               onChange={(e) => setLocalInput(e.target.value)}
               placeholder="Describe your symptoms..."
-              className="flex-1 bg-slate-50 border-slate-200 focus-visible:ring-blue-900"
+              className="flex-1 bg-white border border-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-900 px-4 py-2 rounded-lg disabled:opacity-50"
               disabled={isLoading}
             />
             <Button 
