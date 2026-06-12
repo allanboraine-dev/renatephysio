@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     }
 
     const result = await streamText({
-      model: google('gemini-1.5-flash'),
+      model: google('antigravity-preview-05-2026'),
       system: `You are a helpful, expert physiotherapist assistant for Renate Physio. 
 Your goal is to briefly triage the patient. 
 1. Ask clarifying questions (one at a time) to understand their injury, when it started (onset), and their current pain scale (1-10).
