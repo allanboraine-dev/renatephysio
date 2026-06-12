@@ -66,7 +66,7 @@ Your goal is to briefly triage the patient.
       },
     });
 
-    return result.toDataStreamResponse();
+    return result.toTextStreamResponse();
   } catch (error) {
     console.error('AI Triage Error:', error);
     return new Response('Failed to process triage', { status: 500 });
