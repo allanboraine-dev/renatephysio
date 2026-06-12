@@ -58,16 +58,25 @@ export function BookingFlow() {
   const onSubmit = async (data: BookingValues) => {
     setIsSubmitting(true);
     try {
-      // Here you would integrate with the Supabase API to insert into 'appointments' and 'patients' tables
-      console.log('Submitting booking payload:', data);
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const response = await fetch('/api/book', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to book appointment');
+      }
       
       toast.success('Appointment booked successfully!');
       setStep(4); // Success step
-    } catch (error) {
-      toast.error('Failed to book appointment. Please try again.');
+    } catch (error: any) {
+      console.error('Booking error:', error);
+      toast.error(error.message || 'Failed to book appointment. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
