@@ -1,6 +1,7 @@
 // @ts-nocheck
 "use client";
 
+import { useState } from 'react';
 import { useChat } from '@ai-sdk/react';
 import { motion } from 'framer-motion';
 import { Bot, User, Send, AlertCircle, Loader2 } from 'lucide-react';
@@ -10,7 +11,8 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 export function SymptomChecker() {
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
+  const [localInput, setLocalInput] = useState('');
+  const { messages, append, isLoading } = useChat({
     api: '/api/triage',
     initialMessages: [
       {
@@ -20,6 +22,13 @@ export function SymptomChecker() {
       }
     ]
   });
+
+  const handleCustomSubmit = (e) => {
+    e.preventDefault();
+    if (!localInput.trim()) return;
+    append({ role: 'user', content: localInput });
+    setLocalInput('');
+  };
 
   return (
     <Card className="w-full max-w-lg mx-auto border-0 shadow-xl shadow-blue-900/10">
@@ -81,17 +90,17 @@ export function SymptomChecker() {
         </ScrollArea>
 
         <div className="p-4 bg-white border-t border-slate-100 rounded-b-xl">
-          <form onSubmit={handleSubmit} className="flex gap-2">
+          <form onSubmit={handleCustomSubmit} className="flex gap-2">
             <Input
-              value={input || ''}
-              onChange={handleInputChange}
+              value={localInput}
+              onChange={(e) => setLocalInput(e.target.value)}
               placeholder="Describe your symptoms..."
               className="flex-1 bg-slate-50 border-slate-200 focus-visible:ring-blue-900"
               disabled={isLoading}
             />
             <Button 
               type="submit" 
-              disabled={isLoading || !input?.trim()}
+              disabled={isLoading || !localInput.trim()}
               className="bg-blue-900 hover:bg-blue-800 text-white shrink-0"
             >
               <Send className="w-4 h-4" />
