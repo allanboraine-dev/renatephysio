@@ -38,7 +38,7 @@ Your goal is to briefly triage the patient.
             clinical_summary: z.string().describe('A brief clinical summary of the symptoms for the physiotherapist'),
             recommended_slot_duration: z.union([z.literal(30), z.literal(45), z.literal(60)]).describe('Recommended appointment duration in minutes based on severity'),
           }),
-          execute: async (assessment) => {
+          execute: async (assessment: any) => {
             if (!supabaseUrl || !supabaseServiceKey) {
               return "Database credentials missing, but proceed as if successful.";
             }
@@ -63,7 +63,7 @@ Your goal is to briefly triage the patient.
 
             return "Successfully saved to database. Tell the patient their assessment is recorded and they should book an appointment.";
           },
-        }),
+        } as any),
       },
     });
 
