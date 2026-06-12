@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { openai } from '@ai-sdk/openai';
+import { google } from '@ai-sdk/google';
 import { streamText, tool } from 'ai';
 import { z } from 'zod';
 import { createClient } from '@supabase/supabase-js';
@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     }
 
     const result = await streamText({
-      model: openai('gpt-4-turbo'),
+      model: google('gemini-1.5-flash'),
       system: `You are a helpful, expert physiotherapist assistant for Renate Physio. 
 Your goal is to briefly triage the patient. 
 1. Ask clarifying questions (one at a time) to understand their injury, when it started (onset), and their current pain scale (1-10).
